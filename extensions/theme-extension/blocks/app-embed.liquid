@@ -1,0 +1,16 @@
+{% comment %}
+  SimplAgents – Script Embed (App Embed)
+  Injects user-provided script into storefront <head>
+{% endcomment %}
+
+{% if app.metafields.simplagents.embed_script != blank %}
+  {{ app.metafields.simplagents.embed_script | raw }}
+{% endif %}
+
+{% schema %}
+{
+  "name": "SimplAgents Script Embed",
+  "target": "head",
+  "settings": []
+}
+{% endschema %}
