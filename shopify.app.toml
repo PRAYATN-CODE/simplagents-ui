@@ -4,7 +4,7 @@ client_id = "05c0eee08ce8fe46aa80bb82ced23415"
 name = "simplagents-ui"
 
 # ✅ MUST be your deployed app URL
-application_url = "https://simplagents-ui.onrender.com"
+application_url = "https://simplagents-ui.onrender.com/"
 
 embedded = true
 
