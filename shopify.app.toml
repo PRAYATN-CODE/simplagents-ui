@@ -19,7 +19,7 @@ use_legacy_install_flow = false
 [auth]
 # ✅ MUST be your deployed OAuth callback
 redirect_urls = [
-  "https://simplagents-ui.onrender.com/auth/callback"
+  "https://simplagents-ui.onrender.com/callback"
 ]
 
 [build]
