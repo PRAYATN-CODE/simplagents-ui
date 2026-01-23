@@ -2,7 +2,7 @@
 
 client_id = "dd8ff897559d554561a1223a68f40d6b"
 name = "simplagents-ui"
-application_url = "https://example.com"
+application_url = "https://api.shambho.ai/api/shopify/entry"
 embedded = true
 
 [build]
@@ -17,4 +17,4 @@ api_version = "2026-04"
 scopes = "read_customers,read_orders,read_products,read_themes,write_themes"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://api.shambho.ai/api/shopify/auth/callback" ]

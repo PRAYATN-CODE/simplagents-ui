@@ -288,7 +288,7 @@ export default function Index() {
           >
             {agents.map((agent) => (
               <s-option key={agent.agentId} value={agent.agentId}>
-                Agent ID: {agent.agentId}
+                Agent Name: {agent?.agentName}
               </s-option>
             ))}
           </s-select>

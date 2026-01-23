@@ -23,9 +23,8 @@ export default function EditAgentPage() {
             }
 
             console.log("SimplAgents Token:", data);
-            setIframeUrl(`https://app.simplagents.com?token=${encodeURIComponent(data.token)}`);
+            setIframeUrl(`https://app.simplagents.com?token=${encodeURIComponent(data.token)}&isIframe=true`);
             setShowIframe(true);
-
 
             // You can now use this data in UI
         } catch (err) {
