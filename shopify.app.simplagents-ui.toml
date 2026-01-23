@@ -1,6 +1,6 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "dd8ff897559d554561a1223a68f40d6b"
+client_id = "05c0eee08ce8fe46aa80bb82ced23415"
 name = "simplagents-ui"
 application_url = "https://api.shambho.ai/api/shopify/entry"
 embedded = true

@@ -16,3 +16,6 @@ use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [ "https://api.shambho.ai/api/shopify/auth/callback" ]
+
+[build]
+automatically_update_urls_on_dev = true
