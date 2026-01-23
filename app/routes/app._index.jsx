@@ -247,6 +247,8 @@ export default function Index() {
     }
   }, [activeAccountId, agents]);
 
+  console.log(adminData)
+
   return (
     <s-page heading="Shopify app template">
 

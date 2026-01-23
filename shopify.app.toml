@@ -1,21 +1,26 @@
-# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+# Shopify App Configuration
 
 client_id = "05c0eee08ce8fe46aa80bb82ced23415"
 name = "simplagents-ui"
+
+# ✅ MUST be your deployed app URL
 application_url = "https://api.shambho.ai/api/shopify/entry"
+
 embedded = true
 
 [webhooks]
 api_version = "2026-01"
 
 [access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_customers,read_orders,read_products,read_themes,write_themes"
-optional_scopes = [ ]
+scopes = "read_customers,read_orders,read_products"
+optional_scopes = []
 use_legacy_install_flow = false
 
 [auth]
-redirect_urls = [ "https://api.shambho.ai/api/shopify/auth/callback" ]
+# ✅ MUST be your deployed OAuth callback
+redirect_urls = [
+  "https://api.shambho.ai/api/shopify/auth/callback"
+]
 
 [build]
 automatically_update_urls_on_dev = true
