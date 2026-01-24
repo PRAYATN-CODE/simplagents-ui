@@ -1,44 +1,59 @@
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { useState } from "react";
+import { useShambho } from "../context/ShambhoContext";
 
 export default function EditAgentPage() {
     const shopify = useAppBridge();
 
+    const {
+        shambhoAccessToken,
+        initializeAccount,
+        loading,
+    } = useShambho();
+
     const [iframeUrl, setIframeUrl] = useState("");
     const [showIframe, setShowIframe] = useState(false);
 
-    const fetchSimplAgentsToken = async () => {
-        try {
-            const res = await fetch("/api/simplagents", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                }
+    /* -------- BUTTON CLICK HANDLER -------- */
+    const handleLoadAccount = async () => {
+        // Ensure context is initialized
+        await initializeAccount();
+
+        if (!shambhoAccessToken) {
+            shopify.toast.show("Unable to load account. Please try again.", {
+                isError: true,
             });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.error || "Failed to fetch token");
-            }
-
-            console.log("SimplAgents Token:", data);
-            setIframeUrl(`https://app.simplagents.com?token=${encodeURIComponent(data.token)}&isIframe=true`);
-            setShowIframe(true);
-
-            // You can now use this data in UI
-        } catch (err) {
-            console.error("SimplAgents error:", err);
+            return;
         }
+
+        const url = `https://app.simplagents.com?token=${encodeURIComponent(
+            shambhoAccessToken
+        )}&isIframe=true`;
+
+        setIframeUrl(url);
+        setShowIframe(true);
     };
+
+    /* -------- LOADING UI -------- */
+    if (loading) {
+        return (
+            <s-page heading="Website Preview">
+                <s-section>
+                    <s-stack direction="block" gap="base" align="center">
+                        <s-spinner size="large" />
+                        <s-text tone="subdued">
+                            Loading your SimplAgents account…
+                        </s-text>
+                    </s-stack>
+                </s-section>
+            </s-page>
+        );
+    }
 
     return (
         <s-page heading="Website Preview">
             {!showIframe ? (
-                <s-button
-                    variant="primary"
-                    onClick={fetchSimplAgentsToken}
-                >
+                <s-button variant="primary" onClick={handleLoadAccount}>
                     Load Your Account
                 </s-button>
             ) : (
@@ -53,6 +68,6 @@ export default function EditAgentPage() {
                     }}
                 />
             )}
-        </s-page >
+        </s-page>
     );
 }

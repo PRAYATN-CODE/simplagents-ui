@@ -1,7 +1,7 @@
 import { AppProvider as ShopifyAppProvider } from "@shopify/shopify-app-react-router/react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { Outlet, useLoaderData, useRouteError } from "react-router";
-import { AppProvider } from "../context/AppContext";
+import { ShambhoProvider } from "../context/ShambhoContext";
 import { authenticate } from "../shopify.server";
 
 export const loader = async ({ request }) => {
@@ -20,9 +20,9 @@ export default function App() {
         <s-link href="/app">Home</s-link>
         <s-link href="/app/edit-agent">Edit-Agent</s-link>
       </s-app-nav>
-      <AppProvider>
+      <ShambhoProvider>
         <Outlet />
-      </AppProvider>
+      </ShambhoProvider>
     </ShopifyAppProvider>
   );
 }
