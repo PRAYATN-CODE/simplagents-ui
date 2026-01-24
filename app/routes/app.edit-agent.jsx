@@ -51,23 +51,67 @@ export default function EditAgentPage() {
     }
 
     return (
-        <s-page heading="Website Preview">
-            {!showIframe ? (
-                <s-button variant="primary" onClick={handleLoadAccount}>
-                    Load Your Account
-                </s-button>
-            ) : (
-                <iframe
-                    src={iframeUrl}
-                    title="Website Preview"
-                    style={{
-                        width: "100%",
-                        height: "650px",
-                        border: "none",
-                        borderRadius: "8px",
-                    }}
-                />
+        <s-page heading="Website Preview" fullWidth>
+            {/* BEFORE LOAD */}
+            {!showIframe && (
+                <s-section>
+                    <s-stack
+                        direction="block"
+                        gap="base"
+                        align="center"
+                        inlineAlignment="center"
+                    >
+                        <s-text tone="subdued">
+                            Load your SimplAgents dashboard inside Shopify
+                        </s-text>
+
+                        <s-button
+                            variant="primary"
+                            onClick={handleLoadAccount}
+                        >
+                            Load Your Account
+                        </s-button>
+                    </s-stack>
+                </s-section>
+            )}
+
+            {/* AFTER LOAD */}
+            {showIframe && (
+                <>
+                    {/* TOP BAR */}
+                    <s-section>
+                        <s-stack direction="inline" align="space-between">
+                            <s-button
+                                variant="secondary"
+                                onClick={handleLoadAccount}
+                            >
+                                Refresh Data
+                            </s-button>
+                        </s-stack>
+                    </s-section>
+
+                    {/* IFRAME */}
+                    <s-section>
+                        <s-box
+                            borderWidth="base"
+                            borderRadius="large"
+                            overflow="hidden"
+                            style={{ height: "calc(100vh - 140px)" }}
+                        >
+                            <iframe
+                                src={iframeUrl}
+                                title="Website Preview"
+                                style={{
+                                    width: "100%",
+                                    height: "700px",
+                                    border: "none",
+                                }}
+                            />
+                        </s-box>
+                    </s-section>
+                </>
             )}
         </s-page>
+
     );
 }

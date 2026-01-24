@@ -130,57 +130,130 @@ export default function Index() {
   return (
     <s-page heading="SimplAgents Shopify App">
 
+      <s-section>
+        <s-stack direction="inline" align="space-between" gap="base">
+          <s-text variant="headingMd">
+            SimplAgents Dashboard
+          </s-text>
+
+          <s-button
+            variant="secondary"
+            onClick={() => {
+              shopify.toast.show("Refreshing account data…");
+              initializeAccount();
+            }}
+          >
+            Refresh
+          </s-button>
+        </s-stack>
+      </s-section>
+
       {/* STORE INFO */}
       <s-section heading="Store Information">
-        <s-box padding="base" borderWidth="base" borderRadius="base" background="subdued">
-          <s-text><strong>Store:</strong> {adminData.shop.name}</s-text>
-          <s-text><strong>Domain:</strong> {adminData.shop.myshopifyDomain}</s-text>
-          <s-text><strong>Plan:</strong> {adminData.shop.plan.displayName}</s-text>
+        <s-box
+          padding="base"
+          borderWidth="base"
+          borderRadius="large"
+          background="subdued"
+        >
+          <s-stack direction="block" gap="small">
+            <s-text>
+              <strong>Store:</strong> {adminData.shop.name}
+            </s-text>
+            <s-text>
+              <strong>Domain:</strong> {adminData.shop.myshopifyDomain}
+            </s-text>
+            <s-text>
+              <strong>Plan:</strong> {adminData.shop.plan.displayName}
+            </s-text>
+          </s-stack>
         </s-box>
       </s-section>
 
+
       {/* AGENT SELECT */}
       <s-section heading="Select Agent">
-        {agents.length > 0 && (
-          <s-select
-            label="Agent"
-            value={activeAgent?.agentId || ""}
-            onChange={(e) => {
-              const agent = agents.find(a => a.agentId === e.target.value);
-              setActiveAgent(agent);
-              shopify.toast.show(`Agent selected: ${agent.agentName}`);
-            }}
-          >
-            {agents.map(agent => (
-              <s-option key={agent.agentId} value={agent.agentId}>
-                {agent.agentName}
-              </s-option>
-            ))}
-          </s-select>
+        <s-box maxWidth="420px">
+          {agents.length > 0 && (
+            <s-select
+              label="Agent"
+              value={activeAgent?.agentId || ""}
+              onChange={(e) => {
+                const agent = agents.find(a => a.agentId === e.target.value);
+                setActiveAgent(agent);
+                shopify.toast.show(`Agent selected: ${agent.agentName}`);
+              }}
+            >
+              {agents.map(agent => (
+                <s-option key={agent.agentId} value={agent.agentId}>
+                  {agent.agentName}
+                </s-option>
+              ))}
+            </s-select>
+          )}
+        </s-box>
+        {/* EMBED */}
+        {accountId && (
+          <s-section heading="Test Your Agent on This Link!">
+            <s-box
+              padding="base"
+              borderWidth="base"
+              borderRadius="large"
+              background="subdued"
+            >
+              <s-stack direction="block" gap="extraSmall">
+                <s-text tone="subdued">
+                  Open your agent in a new tab:
+                </s-text>
+
+                <a
+                  href={`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: "var(--p-color-text-link)",
+                    fontWeight: 500,
+                    wordBreak: "break-all",
+                  }}
+                >
+                  {`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
+                </a>
+              </s-stack>
+            </s-box>
+          </s-section>
+
+        )}
+        {accountId && (
+          <s-section heading="Embed Script on Theme">
+            <s-box
+              padding="base"
+              borderWidth="base"
+              borderRadius="large"
+            >
+              <s-stack direction="block" gap="base">
+                <s-button
+                  variant="primary"
+                  onClick={handleEmbedScript}
+                  loading={isEmbedding}
+                >
+                  Embed
+                </s-button>
+
+                <s-text tone="subdued">
+                  Script will be injected into storefront &lt;head&gt;
+                </s-text>
+
+                <s-text tone="subdued">
+                  After embedding, go to{" "}
+                  <strong>Online Store → Themes → Customize</strong> and enable{" "}
+                  <strong>SimplAgents Chat Modal</strong>.
+                </s-text>
+              </s-stack>
+            </s-box>
+          </s-section>
         )}
       </s-section>
 
-      {/* EMBED */}
-      {accountId && (
-        <s-section heading="Embed Script">
-          <s-button
-            variant="primary"
-            onClick={handleEmbedScript}
-            loading={isEmbedding}
-          >
-            Embed Script
-          </s-button>
-
-          <s-text tone="subdued">
-            Script will be injected into storefront &lt;head&gt;
-          </s-text>
-
-          <s-text tone="subdued">
-            After embedding, go to <strong>Online Store → Themes → Customize</strong> and
-            enable <strong>SimplAgents Chat Modal</strong>.
-          </s-text>
-        </s-section>
-      )}
     </s-page>
   );
 }

@@ -15,7 +15,6 @@ export const ShambhoProvider = ({ children }) => {
 
   // 🔥 MAIN INIT CALL
   const initializeAccount = async () => {
-    if (initialized) return;
 
     setLoading(true);
     try {
