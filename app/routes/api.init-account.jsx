@@ -34,7 +34,7 @@ export const action = async ({ request }) => {
             state: session.state || null,
         };
 
-        const res = await fetch("http://localhost:3001/api/shopify/callback", {
+        const res = await fetch(`${process.env.SHAMBHO_API_BASE_URL}/api/shopify/callback`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
