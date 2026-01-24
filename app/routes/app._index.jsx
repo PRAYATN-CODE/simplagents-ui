@@ -2,6 +2,7 @@ import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { useEffect, useState } from "react";
 import { useFetcher, useLoaderData } from "react-router";
+import { useAppContext } from "../context/AppContext";
 import { authenticate } from "../shopify.server";
 
 
@@ -113,6 +114,20 @@ export default function Index() {
   const [selectedAgent, setSelectedAgent] = useState(null);
   const [loadingAgents, setLoadingAgents] = useState(false);
   const [activeAccountId, setActiveAccountId] = useState(null);
+
+  const {
+    activeAgent,
+    setActiveAgent,
+    setAccountId,
+    fetchAgents,
+    loading,
+  } = useAppContext();
+
+  console.log(activeAgent)
+
+  useEffect(() => {
+    fetchAgents();
+  }, []);
 
   const isLoading = ["loading", "submitting"].includes(fetcher.state) && fetcher.formMethod === "POST";
 
@@ -247,7 +262,7 @@ export default function Index() {
     }
   }, [activeAccountId, agents]);
 
-  console.log(adminData)
+  // console.log(adminData)
 
   return (
     <s-page heading="Shopify app template">
