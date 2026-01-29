@@ -31,10 +31,8 @@ export const ShambhoProvider = ({ children }) => {
 
       const agentsData = result.data.data;
 
-      console.log(agentsData)
-
       setAgents(agentsData);
-      setActiveAgent(agentsData[0] || null);
+      // setActiveAgent(agentsData[0] || null);
       setAccountId(agentsData[0]?.accountId || null);
       setShambhoAccessToken(result.data.shambhoAccessToken);
       setInitialized(true);

@@ -65,7 +65,8 @@ export default function Index() {
         const data = await res.json();
 
         if (data?.accountId) {
-          setEmbedScript(scriptTemplate(data.accountId));
+          // setEmbedScript(scriptTemplate(data.accountId));
+          console.log(data)
         }
       } catch (err) {
         console.error("Failed to load accountId");
@@ -203,6 +204,7 @@ export default function Index() {
                 shopify.toast.show(`Agent selected: ${agent.agentName}`);
               }}
             >
+              <s-option value="">Select Agent</s-option>
               {agents.map(agent => (
                 <s-option key={agent.agentId} value={agent.agentId}>
                   {agent.agentName}
