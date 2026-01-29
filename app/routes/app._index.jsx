@@ -148,6 +148,25 @@ export default function Index() {
         </s-stack>
       </s-section>
 
+      <s-section>
+        <s-box
+          borderWidth="base"
+          borderRadius="large"
+          overflow="hidden"
+        >
+          <img
+            src="https://dnz6ajm5xo9z3.cloudfront.net/images/Screenshot_2026-01-28_141344.png"
+            alt="SimplAgents Preview"
+            style={{
+              width: "100%",
+              height: "auto",
+              display: "block",
+              objectFit: "cover",
+            }}
+          />
+        </s-box>
+      </s-section>
+
       {/* STORE INFO */}
       <s-section heading="Store Information">
         <s-box
@@ -271,7 +290,7 @@ const scriptTemplate = (appId) => `
     var o = function () {
       var s = n.createElement("script");
       s.async = true;
-      s.src = "https://chat.shambho.ai/embeded-script.js";
+      s.src = "https://chat-modal-script.vercel.app/embeded-script.js";
       s.onload = function () { t.chatModal.loaded = true; t.renderChatModal(); };
       n.head.appendChild(s);
     };
