@@ -156,7 +156,7 @@ export default function Index() {
           overflow="hidden"
         >
           <img
-            src="https://dnz6ajm5xo9z3.cloudfront.net/images/Screenshot_2026-01-28_141344.png"
+            src="https://dnz6ajm5xo9z3.cloudfront.net/images/WhatsApp_Image_2026-01-29_at_10.25.28_PM.jpeg"
             alt="SimplAgents Preview"
             style={{
               width: "100%",
@@ -282,7 +282,7 @@ export default function Index() {
 /* ---------------- SCRIPT TEMPLATE ---------------- */
 
 const scriptTemplate = (appId) => `
-<script>
+<script id = 'simplagents-chat-script-${appId}'>
   window.chatModalSettings = { "appId": "${appId}", "skin": "Modern" };
   (function () {
     var t = window, e = t.chatModal, a = e && !!e.loaded, n = document;
