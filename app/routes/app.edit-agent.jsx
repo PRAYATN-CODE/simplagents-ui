@@ -88,6 +88,9 @@ export default function EditAgentPage() {
                                 Refresh Data
                             </s-button>
                         </s-stack>
+                        <s-text>
+                            If you get the login screen then Click Again on the Refresh button to load your account properly.
+                        </s-text>
                     </s-section>
 
                     {/* IFRAME */}

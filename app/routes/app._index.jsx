@@ -282,23 +282,38 @@ export default function Index() {
 /* ---------------- SCRIPT TEMPLATE ---------------- */
 
 const scriptTemplate = (appId) => `
-<script id = 'simplagents-chat-script-${appId}'>
-  window.chatModalSettings = { "appId": "${appId}", "skin": "Modern" };
-  (function () {
-    var t = window, e = t.chatModal, a = e && !!e.loaded, n = document;
-    var r = function () { r.m(arguments); };
-    r.q = []; r.m = function (t) { r.q.push(t); };
-    t.chatModal = a ? e : r;
-    var o = function () {
-      var s = n.createElement("script");
-      s.async = true;
+
+  <script id="shambhoai-chat-widget" data-app-id="${appId}" data-skin="Modern">
+    (function () {
+      if (window.__SHAMBHOAI_WIDGET_LOADED__) return;
+      window.__SHAMBHOAI_WIDGET_LOADED__ = true;
+
+      // Read config from script tag
+      var script = document.currentScript;
+      var appId = script.getAttribute("data-app-id");
+      var skin = script.getAttribute("data-skin") || "Modern";
+
+      // Expose global config
+      window.chatModalSettings = {
+        appId: appId,
+        skin: skin
+      };
+
+      // Load widget runtime
+      var s = document.createElement("script");
       s.src = "https://chat-modal-script.vercel.app/embeded-script.js";
-      s.onload = function () { t.chatModal.loaded = true; t.renderChatModal(); };
-      n.head.appendChild(s);
-    };
-    a ? e("update", t.chatModalSettings) : o();
-  })();
-</script>
+      s.async = true;
+
+      s.onload = function () {
+        if (typeof window.renderChatModal === "function") {
+          window.renderChatModal();
+        }
+      };
+
+      document.head.appendChild(s);
+    })();
+  </script>
+
 `.trim();
 
 export const headers = (headersArgs) => boundary.headers(headersArgs);
