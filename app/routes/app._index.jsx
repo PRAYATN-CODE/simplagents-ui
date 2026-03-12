@@ -190,89 +190,105 @@ export default function Index() {
         </s-box>
       </s-section>
 
+      <s-section heading="Agent Setup">
+        <s-stack direction="block" gap="base">
 
-      {/* AGENT SELECT */}
-      <s-section heading="Select Agent">
-        <s-box maxWidth="420px">
-          {agents.length > 0 && (
-            <s-select
-              label="Agent"
-              value={activeAgent?.agentId || ""}
-              onChange={(e) => {
-                const agent = agents.find(a => a.agentId === e.target.value);
-                setActiveAgent(agent);
-                shopify.toast.show(`Agent selected: ${agent.agentName}`);
-              }}
-            >
-              <s-option value="">Select Agent</s-option>
-              {agents.map(agent => (
-                <s-option key={agent.agentId} value={agent.agentId}>
-                  {agent.agentName}
-                </s-option>
-              ))}
-            </s-select>
+          {/* Agent Selector */}
+          <s-box maxWidth="420px">
+            {agents.length > 0 && (
+              <s-select
+                label="Choose Agent"
+                value={activeAgent?.agentId || ""}
+                onChange={(e) => {
+                  const agent = agents.find(a => a.agentId === e.target.value);
+                  setActiveAgent(agent);
+                  shopify.toast.show(`Agent selected: ${agent.agentName}`);
+                }}
+              >
+                <s-option value="">Select Agent</s-option>
+                {agents.map(agent => (
+                  <s-option key={agent.agentId} value={agent.agentId}>
+                    {agent.agentName}
+                  </s-option>
+                ))}
+              </s-select>
+            )}
+          </s-box>
+
+          {/* Only show when agent selected */}
+          {activeAgent && (
+            <s-stack direction="block" gap="base">
+
+              {/* Test Link */}
+              <s-box
+                padding="base"
+                borderWidth="base"
+                borderRadius="large"
+                background="subdued"
+              >
+                <s-stack direction="block" gap="extraSmall">
+                  <s-text variant="headingSm">
+                    Test Your Agent
+                  </s-text>
+
+                  <s-text tone="subdued">
+                    Open this link to preview your chatbot:
+                  </s-text>
+
+                  <a
+                    href={`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: "var(--p-color-text-link)",
+                      fontWeight: 500,
+                      wordBreak: "break-all",
+                    }}
+                  >
+                    {`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
+                  </a>
+                </s-stack>
+              </s-box>
+
+              {/* Embed Section */}
+              <s-box
+                padding="base"
+                borderWidth="base"
+                borderRadius="large"
+              >
+                <s-stack direction="block" gap="base">
+
+                  <s-text variant="headingSm">
+                    Embed Chat Widget
+                  </s-text>
+
+                  <s-text tone="subdued">
+                    Inject the chat widget directly into your storefront theme.
+                  </s-text>
+
+                  <s-button
+                    variant="primary"
+                    onClick={handleEmbedScript}
+                    loading={isEmbedding}
+                  >
+                    Embed Script
+                  </s-button>
+
+                  <s-text tone="subdued">
+                    After embedding go to:
+                    <br />
+                    <strong>Online Store → Themes → Customize</strong>
+                    <br />
+                    Enable <strong>SimplAgents Chat Modal</strong>.
+                  </s-text>
+
+                </s-stack>
+              </s-box>
+
+            </s-stack>
           )}
-        </s-box>
-        {/* EMBED */}
-        {accountId && (
-          <s-section heading="Test Your Agent on This Link!">
-            <s-box
-              padding="base"
-              borderWidth="base"
-              borderRadius="large"
-              background="subdued"
-            >
-              <s-stack direction="block" gap="extraSmall">
-                <s-text tone="subdued">
-                  Open your agent in a new tab:
-                </s-text>
 
-                <a
-                  href={`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: "var(--p-color-text-link)",
-                    fontWeight: 500,
-                    wordBreak: "break-all",
-                  }}
-                >
-                  {`https://chat.simplagents.com/ui?appId=${activeAgent?.accountId}`}
-                </a>
-              </s-stack>
-            </s-box>
-          </s-section>
-
-        )}
-        {accountId && (
-          <s-section heading="Embed Script on Theme">
-            <s-box
-              padding="base"
-              borderWidth="base"
-              borderRadius="large"
-            >
-              <s-stack direction="block" gap="base">
-                <s-button
-                  variant="primary"
-                  onClick={handleEmbedScript}
-                  loading={isEmbedding}
-                >
-                  Embed
-                </s-button>
-
-                <s-text tone="subdued">
-                  Script will be injected into storefront &lt;head&gt;
-                </s-text>
-
-                <s-text tone="subdued">
-                  After embedding, go to{" "}
-                  <strong>Online Store → Themes → Customize</strong> and enable{" "}
-                  <strong>SimplAgents Chat Modal</strong>.
-                </s-text>
-              </s-stack>
-            </s-box>
-          </s-section>
-        )}
+        </s-stack>
       </s-section>
 
     </s-page>
