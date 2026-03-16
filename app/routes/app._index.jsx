@@ -46,11 +46,14 @@ export default function Index() {
     loading,
     initializeAccount,
     setActiveAgent,
+    shambhoAccessToken
   } = useShambho();
 
   /* -------- LOCAL UI STATE -------- */
   const [embedScript, setEmbedScript] = useState("");
   const [isEmbedding, setIsEmbedding] = useState(false);
+  const [iframeUrl, setIframeUrl] = useState("");
+  const [showIframe, setShowIframe] = useState(false);
 
   /* -------- INIT ACCOUNT (ONCE) -------- */
   useEffect(() => {
@@ -82,6 +85,17 @@ export default function Index() {
       setEmbedScript(scriptTemplate(activeAgent.accountId));
     }
   }, [activeAgent]);
+
+  useEffect(() => {
+    if (activeAgent && shambhoAccessToken) {
+      const url = `https://app.simplagents.com/agent/${activeAgent?.agentId}/agentic-ai?token=${encodeURIComponent(
+        shambhoAccessToken
+      )}&isIframe=true`;
+
+      setIframeUrl(url);
+      setShowIframe(true);
+    }
+  }, [activeAgent, shambhoAccessToken]);
 
   /* -------- EMBED SCRIPT -------- */
   const handleEmbedScript = async () => {
@@ -193,28 +207,6 @@ export default function Index() {
       <s-section heading="Agent Setup">
         <s-stack direction="block" gap="base">
 
-          {/* Agent Selector */}
-          <s-box maxWidth="420px">
-            {agents.length > 0 && (
-              <s-select
-                label="Choose Agent"
-                value={activeAgent?.agentId || ""}
-                onChange={(e) => {
-                  const agent = agents.find(a => a.agentId === e.target.value);
-                  setActiveAgent(agent);
-                  shopify.toast.show(`Agent selected: ${agent.agentName}`);
-                }}
-              >
-                <s-option value="">Select Agent</s-option>
-                {agents.map(agent => (
-                  <s-option key={agent.agentId} value={agent.agentId}>
-                    {agent.agentName}
-                  </s-option>
-                ))}
-              </s-select>
-            )}
-          </s-box>
-
           {/* Only show when agent selected */}
           {activeAgent && (
             <s-stack direction="block" gap="base">
@@ -288,7 +280,50 @@ export default function Index() {
             </s-stack>
           )}
 
+          {/* Agent Selector */}
+          <s-box maxWidth="420px">
+            {agents.length > 0 && (
+              <s-select
+                label="Choose Agent"
+                value={activeAgent?.agentId || ""}
+                onChange={(e) => {
+                  const agent = agents.find(a => a.agentId === e.target.value);
+                  setActiveAgent(agent);
+                  shopify.toast.show(`Agent selected: ${agent.agentName}`);
+                }}
+              >
+                <s-option value="">Select Agent</s-option>
+                {agents.map(agent => (
+                  <s-option key={agent.agentId} value={agent.agentId}>
+                    {agent.agentName}
+                  </s-option>
+                ))}
+              </s-select>
+            )}
+          </s-box>
+
+
+
         </s-stack>
+      </s-section>
+
+      <s-section>
+        <s-box
+          borderWidth="base"
+          borderRadius="large"
+          overflow="hidden"
+          style={{ height: "70dvh" }}
+        >
+          <iframe
+            src={iframeUrl}
+            title="Website Preview"
+            style={{
+              width: "100%",
+              height: "700px",
+              border: "none",
+            }}
+          />
+        </s-box>
       </s-section>
 
     </s-page>
