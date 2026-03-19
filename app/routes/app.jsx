@@ -18,7 +18,7 @@ export default function App() {
     <ShopifyAppProvider embedded apiKey={apiKey}>
       <s-app-nav>
         <s-link href="/app">Home</s-link>
-        <s-link href="/app/edit-agent">Edit-Agent</s-link>
+        {/* <s-link href="/app/edit-agent">Edit-Agent</s-link> */}
       </s-app-nav>
       <ShambhoProvider>
         <Outlet />
